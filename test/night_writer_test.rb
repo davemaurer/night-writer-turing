@@ -8,7 +8,7 @@ describe NightWriter do
   end
 
   it 'can take in a file' do
-    text = 'The quick brown fox jumped over the lazy dogs.1 fox, 5 dogs, 3 times.10 ways to tuesday.'
-    assert_equal text, @nw.process_file('test_text.txt')
+    text = 'The quick brown fox jumped over the lazy dogs. 1 fox, 5 dogs, 3 times. 10 ways to tuesday.'
+    assert_equal text, @nw.open_file('test_text.txt')
   end
 end
