@@ -19,4 +19,9 @@ And this is line three.\n"
     assert_equal text, @nw.open_file('test_text_multiline.txt').read
   end
 
+  it 'has a top alphabet key' do
+    tk = @nw.top_key
+    top_of_word = tk[:h] + tk[:e] + tk[:l] + tk[:l] + tk[:o]
+    assert_equal '0.0.000..', top_of_word
+  end
 end
