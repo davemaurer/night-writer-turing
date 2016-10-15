@@ -23,6 +23,14 @@ class NightWriter
   def write_file(file, target)
     File.write(target, open_file(file))
   end
+
+  def line_one(file_string)
+    message_characters = file_string.chars
+    top_line = message_characters.map do |character|
+      @key[character]
+    end
+    top_line.join(' ')
+  end
 end
 
-NightWriter.new.write_file(ARGV[0], ARGV[1])
+# NightWriter.new.write_file(ARGV[0], ARGV[1])
