@@ -10,14 +10,19 @@ class NightWriter
             'z' => '0..000', '0' => '.000..', '1' => '0.....', '2' => '0.0...', '3' => '00....',
             '4' => '00.0..', '5' => '0..0..', '6' => '000...', '7' => '0000..', '8' => '0.00..',
             '9' => '.00...', '#' => '.0.000', '.' => '..00.0', '?' => '..0.00', '!' => '..000.',
-            "'" => '....0.', ',' => '..0...', '-' => '....00', '#' => '.0.000', 'cap' => '.....0'}
+            "'" => '....0.', ',' => '..0...', '-' => '....00', 'cap' => '.....0'}
   end
 
   def process_file(file)
-    open_file(file)
   end
 
   def open_file(file)
     File.open(file).map(&:chomp).join(' ')
   end
+
+  def write_file(file, target)
+    File.write(target, open_file(file))
+  end
 end
+
+NightWriter.new.write_file(ARGV[0], ARGV[1])
