@@ -30,21 +30,24 @@ class NightWriter
   end
 
   def create_braille_line(file_string, index_range)
-    message_characters = file_string.chars.map
-    braille_characters = map_to_keys(message_characters)
+    file_characters = file_string.chars
+    capitalized_characters = add_caps(file_characters)
+    braille_characters = map_to_keys(capitalized_characters)
     line = braille_characters.map { |c| c == ' ' ? ' ' : c[index_range] }
     line.join
   end
 
   def map_to_keys(characters)
-    characters.map do |character|
-      add_caps(character)
-      (@key[character] if @key[character])
-    end
+    characters.map { |character| (@key[character] if @key[character]) }
   end
 
-  def add_caps(letter)
-    @key['cap'] + @key[letter.downcase] if /[[:upper:]]/.match(letter)
+  def add_caps(characters)
+    characters.map.with_index do |letter, index|
+      if /[[:upper:]]/.match(letter)
+        letter.downcase
+        characters.insert(index - 1, 'cap')
+      end
+    end
   end
 
 end
