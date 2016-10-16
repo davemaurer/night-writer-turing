@@ -27,8 +27,8 @@ class NightWriter
   def create_braille_line(file_string, index_range)
     message_characters = file_string.chars
     braille_characters = message_characters.map { |character| @key[character] if @key[character] }
-    top_line = braille_characters.map { |c| c[index_range] }
-    top_line.join
+    line = braille_characters.map { |c| c == ' ' ? ' ' : c[index_range] }
+    line.join
   end
 end
 
