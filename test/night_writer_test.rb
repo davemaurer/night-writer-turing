@@ -24,7 +24,13 @@ describe NightWriter do
   end
 
   it 'can write the top line of braille' do
-    message = "hello world"
+    skip
+    message = 'hello world'
     assert_equal '0.0.0.0.0. .00.0.0.00', @nw.create_braille_line(message, 0..1)
+  end
+
+  it 'can write the second line of braille' do
+    message = 'hello world'
+    assert_equal '00.00.0..000.0000..0', @nw.create_braille_line(message, 2..3)
   end
 end
