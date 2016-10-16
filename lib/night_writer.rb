@@ -24,10 +24,10 @@ class NightWriter
     File.write(target, open_file(file))
   end
 
-  def line_one(file_string)
+  def create_braille_line(file_string, index_range)
     message_characters = file_string.chars
     braille_characters = message_characters.map { |character| @key[character] if @key[character] }
-    top_line = braille_characters.map { |c| c[0..1] }
+    top_line = braille_characters.map { |c| c[index_range] }
     top_line.join
   end
 end
