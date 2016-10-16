@@ -13,23 +13,28 @@ class NightWriter
             "'" => '....0.', ',' => '..0...', '-' => '....00', ' ' => ' ', 'cap' => '.....0'}
   end
 
-  def process_file(file)
+  def process_lines(file)
+    top_line    = create_braille_line(open_file(file), 0..1)
+    middle_line = create_braille_line(open_file(file), 2..3)
+    bottom_line = create_braille_line(open_file(file), 4..5)
+    [top_line, middle_line, bottom_line]
   end
 
-  def open_file(file)
-    File.open(file).map(&:chomp).join(' ')
+  def open_file(file_given)
+    File.open(file_given).map(&:chomp).join(' ')
   end
 
-  def write_file(file, target)
-    File.write(target, open_file(file))
+  def write_file(file_to_read, target)
+    lines = process_lines(file_to_read)
+    File.open(target, 'w') { |file| file.puts(lines) }
   end
 
   def create_braille_line(file_string, index_range)
-    message_characters = file_string.chars
+    message_characters = file_string.chars.map(&:downcase)
     braille_characters = message_characters.map { |character| @key[character] if @key[character] }
     line = braille_characters.map { |c| c == ' ' ? ' ' : c[index_range] }
     line.join
   end
 end
 
-# NightWriter.new.write_file(ARGV[0], ARGV[1])
+NightWriter.new.write_file(ARGV[0], ARGV[1])
