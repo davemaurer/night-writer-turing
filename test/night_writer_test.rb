@@ -19,7 +19,12 @@ describe NightWriter do
 
   it 'has an alphabet key' do
     tk = @nw.key
-    top_of_word = tk['h'] + tk['e'] + tk['l'] + tk['l'] + tk['o']
-    assert_equal '0.00..0..0..0.0.0.0.0.0.0..00.', top_of_word
+    braille_characters = tk['h'] + tk['e'] + tk['l'] + tk['l'] + tk['o']
+    assert_equal '0.00..0..0..0.0.0.0.0.0.0..00.', braille_characters
+  end
+
+  it 'can write the top line of braille' do
+    message = "hello world"
+    assert_equal '0.0.0.0.0. .00.0.0.00', @nw.line_one(message)
   end
 end
