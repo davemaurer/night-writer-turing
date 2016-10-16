@@ -10,7 +10,7 @@ class NightWriter
             'z' => '0..000', '0' => '.000..', '1' => '0.....', '2' => '0.0...', '3' => '00....',
             '4' => '00.0..', '5' => '0..0..', '6' => '000...', '7' => '0000..', '8' => '0.00..',
             '9' => '.00...', '#' => '.0.000', '.' => '..00.0', '?' => '..0.00', '!' => '..000.',
-            "'" => '....0.', ',' => '..0...', '-' => '....00', 'cap' => '.....0'}
+            "'" => '....0.', ',' => '..0...', '-' => '....00', ' ' => ' ', 'cap' => '.....0'}
   end
 
   def process_file(file)
@@ -26,10 +26,9 @@ class NightWriter
 
   def line_one(file_string)
     message_characters = file_string.chars
-    top_line = message_characters.map do |character|
-      @key[character]
-    end
-    top_line.join(' ')
+    braille_characters = message_characters.map { |character| @key[character] if @key[character] }
+    top_line = braille_characters.map { |c| c[0..1] }
+    top_line.join
   end
 end
 
