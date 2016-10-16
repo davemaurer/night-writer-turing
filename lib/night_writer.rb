@@ -14,9 +14,9 @@ class NightWriter
   end
 
   def process_lines(file)
-    top_line    = create_braille_line(open_file(file), 0..1)
-    middle_line = create_braille_line(open_file(file), 2..3)
-    bottom_line = create_braille_line(open_file(file), 4..5)
+    top_line    = create_braille_line(open_file(file), 0..1).slice(1..160)
+    middle_line = create_braille_line(open_file(file), 2..3).slice(1..160)
+    bottom_line = create_braille_line(open_file(file), 4..5).slice(1..160)
     [top_line, middle_line, bottom_line]
   end
 
