@@ -13,7 +13,7 @@ describe NightWriter do
   end
 
   it 'can take in a file with multiple lines' do
-    text = 'This is line one. This is line two. And this is line three.'
+    text = 'This is line one. This is line two. And this is line three. And this is line 4 5 6 7 8 9 10.'
     assert_equal text, @nw.open_file('test_text_multiline.txt')
   end
 
@@ -36,5 +36,11 @@ describe NightWriter do
   it 'can write the third line of braille' do
     message = 'hello world'
     assert_equal '....0.0.0. .00.0.0...', @nw.create_braille_line(message, 4..5)
+  end
+
+  it 'can write a word in braille' do
+    file = File.open('new_file', 'w') { |f| f.puts 'apple' }
+    file_string = File.open(file).map(&:chomp).join(' ')
+    assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines(file_string)
   end
 end
