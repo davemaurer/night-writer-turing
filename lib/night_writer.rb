@@ -43,7 +43,7 @@ class NightWriter
 
   def map_to_keys(characters)
     mapped = characters.map do |character|
-      text_to_braille_key[character] if text_to_braille_key[character]
+      text_to_braille_key[character]
     end
     mapped.compact
   end
