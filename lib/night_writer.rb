@@ -14,10 +14,25 @@ class NightWriter
   end
 
   def process_lines(file)
-    top_line    = translate_text_to_braille(open_file(file), 0..1).slice(0..159)
-    middle_line = translate_text_to_braille(open_file(file), 2..3).slice(0..159)
-    bottom_line = translate_text_to_braille(open_file(file), 4..5).slice(0..159)
-    [top_line, middle_line, bottom_line]
+    top_lines    = translate_text_to_braille(open_file(file), 0..1).scan(/.{1,160}/)
+    middle_lines = translate_text_to_braille(open_file(file), 2..3).scan(/.{1,160}/)
+    bottom_lines = translate_text_to_braille(open_file(file), 4..5).scan(/.{1,160}/)
+    format_lines_for_writing([top_lines, middle_lines, bottom_lines])
+  end
+
+  def format_lines_for_writing(lines)
+    result = []
+    lines.first.length.times do
+      lines.map { |line| result << line.shift }
+    end
+    add_braille_line_breaks(result)
+  end
+
+  def add_braille_line_breaks(lines)
+    lines.map do |line|
+      current_number = lines.index(line) + 1
+      current_number % 3 == 0 ? line + "\n\n" : line
+    end
   end
 
   def open_file(file_given)
@@ -34,10 +49,6 @@ class NightWriter
     braille_characters = map_to_keys(add_caps(alpha_characters))
     line = braille_characters.map { |c| c == ' ' ? ' ' : c[index_range] }
     line.join
-  end
-
-  def translate_braille_to_text(string_from_file)
-
   end
 
   def map_to_keys(characters)
