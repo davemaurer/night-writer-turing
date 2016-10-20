@@ -3,11 +3,18 @@ require_relative 'translation_keys'
 class NightWriter
   include Keys
 
+  def initialize
+    @number_time = false
+  end
+
   def process_lines(file)
-    top_lines    = translate_text_to_braille(open_file(file), 0..1).scan(/.{1,160}/)
-    middle_lines = translate_text_to_braille(open_file(file), 2..3).scan(/.{1,160}/)
-    bottom_lines = translate_text_to_braille(open_file(file), 4..5).scan(/.{1,160}/)
-    format_lines_for_writing([top_lines, middle_lines, bottom_lines])
+    character_string = open_file(file)
+    ranges = [0..1, 2..3, 4..5]
+    lines = ranges.map { |range| translate_text_to_braille(character_string, range).scan(/.{1,160}/) }
+    # top_line    = translate_text_to_braille(character_string, 0..1).scan(/.{1,160}/)
+    # middle_line = translate_text_to_braille(character_string, 2..3).scan(/.{1,160}/)
+    # bottom_line = translate_text_to_braille(character_string, 4..5).scan(/.{1,160}/)
+    format_lines_for_writing(lines)
   end
 
   def format_lines_for_writing(lines)
@@ -36,7 +43,8 @@ class NightWriter
 
   def translate_text_to_braille(string_from_file, index_range)
     alpha_characters = string_from_file.chars
-    braille_characters = map_to_keys(add_caps(alpha_characters))
+    formatted_characters = add_caps_and_numbers(alpha_characters)
+    braille_characters = map_to_keys(formatted_characters)
     line = braille_characters.map { |c| c == ' ' ? ' ' : c[index_range] }
     line.join
   end
@@ -48,11 +56,36 @@ class NightWriter
     mapped.compact
   end
 
-  def add_caps(characters)
-    mapped = characters.map do |c|
+  def add_caps_and_numbers(characters)
+    capitalized = characters.map do |c|
       /[[:upper:]]/.match(c) ? ['cap', c.downcase] : c
     end
-    mapped.flatten
+    add_numbers(capitalized.flatten)
+    # require 'pry' ; binding.pry
+  end
+
+  def add_numbers(characters)
+    formatted = characters.map.with_index do |c, i|
+      if is_a_number?(c) && @number_time == false
+        @number_time = true unless is_an_end_number?(c, characters[i + 1])
+        ['num', c]
+      elsif is_an_end_number?(c, characters[i + 1]) && @number_time
+        @number_time = false
+        c
+      else
+        c
+      end
+    end
+    @number_time = false
+    formatted.flatten
+  end
+
+  def is_a_number?(character)
+    (character.to_i != 0 || character == 0)
+  end
+
+  def is_an_end_number?(character, next_character)
+    (is_a_number?(character) && next_character == ' ')
   end
 
 end
