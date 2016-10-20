@@ -10,10 +10,9 @@ class NightWriter
   def process_lines(file)
     character_string = open_file(file)
     ranges = [0..1, 2..3, 4..5]
-    lines = ranges.map { |range| translate_text_to_braille(character_string, range).scan(/.{1,160}/) }
-    # top_line    = translate_text_to_braille(character_string, 0..1).scan(/.{1,160}/)
-    # middle_line = translate_text_to_braille(character_string, 2..3).scan(/.{1,160}/)
-    # bottom_line = translate_text_to_braille(character_string, 4..5).scan(/.{1,160}/)
+    lines = ranges.map do |range|
+      translate_text_to_braille(character_string, range).scan(/.{1,160}/)
+    end
     format_lines_for_writing(lines)
   end
 
@@ -61,7 +60,6 @@ class NightWriter
       /[[:upper:]]/.match(c) ? ['cap', c.downcase] : c
     end
     add_numbers(capitalized.flatten)
-    # require 'pry' ; binding.pry
   end
 
   def add_numbers(characters)
