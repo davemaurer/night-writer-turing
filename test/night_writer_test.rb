@@ -14,11 +14,11 @@ describe NightWriter do
 
   it 'can take in a file with multiple lines' do
     text = 'This is line one. This is line two. And this is line three. And this is line 4 5 6 7 8 9 10.'
-    assert_equal text, @nw.open_file('test_text_multiline.txt')
+    assert_equal text, @nw.open_file('./test/test_text_multiline.txt')
   end
 
   it 'has an alphabet key' do
-    tk = @nw.key
+    tk = @nw.text_to_braille_key
     braille_characters = tk['h'] + tk['e'] + tk['l'] + tk['l'] + tk['o']
     assert_equal '0.00..0..0..0.0.0.0.0.0.0..00.', braille_characters
   end
