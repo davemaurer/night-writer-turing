@@ -72,14 +72,22 @@ class NightWriter
 
   def check_for_number(character, index)
     if is_a_number?(character) && @number_time == false
-      @number_time = true unless is_an_end_number?(character, characters[index + 1])
-      ['num', character]
+      add_lead_number(character, index)
     elsif is_an_end_number?(character, characters[index + 1]) && @number_time
-      @number_time = false
-      character
+      add_end_number(character)
     else
       character
     end
+  end
+
+  def add_lead_number(character, index)
+    @number_time = true unless is_an_end_number?(character, characters[index + 1])
+    ['num', character]
+  end
+
+  def add_end_number(character)
+    @number_time = false
+    character
   end
 
   def is_a_number?(character)
