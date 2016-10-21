@@ -64,18 +64,22 @@ class NightWriter
 
   def add_numbers(characters)
     formatted = characters.map.with_index do |c, i|
-      if is_a_number?(c) && @number_time == false
-        @number_time = true unless is_an_end_number?(c, characters[i + 1])
-        ['num', c]
-      elsif is_an_end_number?(c, characters[i + 1]) && @number_time
-        @number_time = false
-        c
-      else
-        c
-      end
+      check_for_number(c, i)
     end
     @number_time = false
     formatted.flatten
+  end
+
+  def check_for_number(character, index)
+    if is_a_number?(character) && @number_time == false
+      @number_time = true unless is_an_end_number?(character, characters[index + 1])
+      ['num', character]
+    elsif is_an_end_number?(character, characters[index + 1]) && @number_time
+      @number_time = false
+      character
+    else
+      character
+    end
   end
 
   def is_a_number?(character)
