@@ -70,24 +70,18 @@ class NightWriter
     formatted.flatten
   end
 
-  def check_for_number(characters, character, index)
-    if is_a_number?(character) && !@number_time
-      add_lead_number(characters, character, index)
-    elsif is_an_end_number?(character, characters[index + 1]) && @number_time
-      add_end_number(character)
+  def check_for_number(characters, c, i)
+    if is_a_number?(c) && !@number_time
+      add_lead_number(characters, c, i)
     else
-      character
+      @number_time = false if is_an_end_number?(c, c[i + 1]) && @number_time
+      c
     end
   end
 
-  def add_lead_number(characters, character, index)
-    @number_time = true unless is_an_end_number?(character, characters[index + 1])
-    ['num', character]
-  end
-
-  def add_end_number(character)
-    @number_time = false
-    character
+  def add_lead_number(characters, c, i)
+    @number_time = true unless is_an_end_number?(c, characters[i + 1])
+    ['num', c]
   end
 
   def is_a_number?(character)
