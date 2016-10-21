@@ -25,22 +25,20 @@ describe NightWriter do
 
   it 'can write the top line of braille' do
     message = 'hello world'
-    assert_equal '0.0.0.0.0. .00.0.0.00', @nw.create_braille_line(message, 0..1)
+    assert_equal '0.0.0.0.0. .00.0.0.00', @nw.translate_text_to_braille(message, 0..1)
   end
 
   it 'can write the second line of braille' do
     message = 'hello world'
-    assert_equal '00.00.0..0 00.0000..0', @nw.create_braille_line(message, 2..3)
+    assert_equal '00.00.0..0 00.0000..0', @nw.translate_text_to_braille(message, 2..3)
   end
 
   it 'can write the third line of braille' do
     message = 'hello world'
-    assert_equal '....0.0.0. .00.0.0...', @nw.create_braille_line(message, 4..5)
+    assert_equal '....0.0.0. .00.0.0...', @nw.translate_text_to_braille(message, 4..5)
   end
 
-  it 'can write a word in braille' do
-    file = File.open('new_file', 'w') { |f| f.puts 'apple' }
-    file_string = File.open(file).map(&:chomp).join(' ')
-    assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines(file_string)
+  it 'can take a string and prep it for braille output' do
+    assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines('./test/new_file')
   end
 end

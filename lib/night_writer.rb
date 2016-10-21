@@ -21,7 +21,8 @@ class NightWriter
     lines.first.length.times do
       lines.map { |line| result << line.shift }
     end
-    add_braille_line_breaks(result)
+    return add_braille_line_breaks(result) if lines.length > 3
+    result
   end
 
   def add_braille_line_breaks(lines)
