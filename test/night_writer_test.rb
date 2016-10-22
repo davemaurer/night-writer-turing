@@ -45,4 +45,8 @@ describe NightWriter do
   it 'starts out with a number_time attribute' do
     assert_equal false, @nw.number_time
   end
+
+  it 'has a numbers_active? method to find out number_time state' do
+    assert_equal false, @nw.numbers_active?
+  end
 end
