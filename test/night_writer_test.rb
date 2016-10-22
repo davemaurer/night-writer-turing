@@ -38,8 +38,13 @@ describe NightWriter do
     assert_equal '....0.0.0. .00.0.0...', @nw.translate_text_to_braille(message, 4..5)
   end
 
-  it 'can take a string and prep it for braille output' do
-    assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines('./test/new_file')
+  it 'can take a file and prep it for braille output' do
+    assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines('./test/test_apple.txt')
+  end
+
+  it 'takes in a file and outputs correct braille' do
+    @nw.write_braille('./test/test_apple.txt', './test/test_target.txt')
+    assert_equal "0.00000.0.\n..0.0.0..0\n..0.0.0...\n", File.read('./test/test_target.txt')
   end
 
   it 'starts out with a number_time attribute' do
@@ -90,4 +95,5 @@ describe NightWriter do
     collection = ['A', 'b', 'C']
     assert_equal ['cap', 'a', 'b', 'cap', 'c'], @nw.add_caps_and_numbers(collection)
   end
+
 end
