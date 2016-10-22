@@ -61,7 +61,9 @@ describe NightWriter do
   end
 
   it 'knows when a character is the last number' do
-    collection = ['1', '2', 's', 't', 'r', 'i', 'n', 'g']
+    collection = ['1', '2', ' ', 's', 't', 'r', 'i', 'n', 'g']
     refute @nw.is_an_end_number?(collection.first, collection[1])
+    assert @nw.is_an_end_number?(collection[1], collection[2])
   end
+
 end
