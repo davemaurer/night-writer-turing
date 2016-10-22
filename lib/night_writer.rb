@@ -13,7 +13,7 @@ class NightWriter
   end
 
   def process_lines(file)
-    character_string = open_file(file)
+    character_string = open_and_format_file(file)
     ranges = [0..1, 2..3, 4..5]
     lines = ranges.map do |range|
       translate_text_to_braille(character_string, range).scan(/.{1,160}/)
@@ -37,7 +37,7 @@ class NightWriter
     end
   end
 
-  def open_file(file_given)
+  def open_and_format_file(file_given)
     File.open(file_given).map(&:chomp).join(' ')
   end
 

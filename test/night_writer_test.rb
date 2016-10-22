@@ -9,12 +9,12 @@ describe NightWriter do
 
   it 'can take in a one line file' do
     text = 'The quick brown fox jumped over the lazy dogs. 1 fox, 5 dogs, 3 times. 10 ways to Tuesday.'
-    assert_equal text, @nw.open_file('./test/test_text.txt')
+    assert_equal text, @nw.open_and_format_file('./test/test_text.txt')
   end
 
   it 'can take in a file with multiple lines' do
     text = 'This is line one. This is line two. And this is line three. And this is line 4 5 6 7 8 9 10.'
-    assert_equal text, @nw.open_file('./test/test_text_multiline.txt')
+    assert_equal text, @nw.open_and_format_file('./test/test_text_multiline.txt')
   end
 
   it 'has an alphabet key' do
@@ -49,4 +49,6 @@ describe NightWriter do
   it 'has a numbers_active? method to find out number_time state' do
     assert_equal false, @nw.numbers_active?
   end
+
+  it ''
 end
