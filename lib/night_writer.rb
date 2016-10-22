@@ -7,6 +7,10 @@ class NightWriter
     @number_time = false
   end
 
+  def numbers_active?
+    @number_time
+  end
+
   def process_lines(file)
     character_string = open_file(file)
     ranges = [0..1, 2..3, 4..5]
@@ -72,10 +76,10 @@ class NightWriter
   end
 
   def check_for_number(characters, c, i)
-    if is_a_number?(c) && !@number_time
+    if is_a_number?(c) && !numbers_active?
       add_lead_number(characters, c, i)
     else
-      @number_time = false if is_an_end_number?(c, c[i + 1]) && @number_time
+      @number_time = false if is_an_end_number?(c, c[i + 1]) && numbers_active?
       c
     end
   end
