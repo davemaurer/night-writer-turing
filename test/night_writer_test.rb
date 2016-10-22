@@ -68,6 +68,7 @@ describe NightWriter do
 
   it 'adds a number character to lead number in a character series' do
     collection = ['1', '2']
-    assert [['num', '1'], '2'], @nw.add_numbers(collection)
+    assert_equal ['num', '1', '2'], @nw.add_numbers(collection)
   end
+
 end
