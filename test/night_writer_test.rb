@@ -50,5 +50,8 @@ describe NightWriter do
     assert_equal false, @nw.numbers_active?
   end
 
-  it ''
+  it 'can identify a number within a character collection' do
+    collection = ['s', 't', 'r', 'i', 'n', 'g', '1']
+    assert @nw.is_a_number?(collection.last)
+  end
 end
