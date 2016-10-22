@@ -2,6 +2,7 @@ require_relative 'translation_keys'
 
 class NightWriter
   include Keys
+  attr_reader :number_time
 
   def initialize
     @number_time = false

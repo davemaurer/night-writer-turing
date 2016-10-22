@@ -41,4 +41,8 @@ describe NightWriter do
   it 'can take a string and prep it for braille output' do
     assert_equal ['0.00000.0.', '..0.0.0..0', '..0.0.0...'], @nw.process_lines('./test/new_file')
   end
+
+  it 'starts out with a number_time attribute' do
+    assert_equal false, @nw.number_time
+  end
 end
