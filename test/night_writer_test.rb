@@ -85,4 +85,9 @@ describe NightWriter do
     @nw.add_numbers(collection)
     refute @nw.numbers_active?
   end
+
+  it 'adds capitals' do
+    collection = ['A', 'b', 'C']
+    assert_equal ['cap', 'a', 'b', 'cap', 'c'], @nw.add_caps_and_numbers(collection)
+  end
 end
