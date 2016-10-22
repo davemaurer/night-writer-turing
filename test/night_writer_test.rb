@@ -66,4 +66,8 @@ describe NightWriter do
     assert @nw.is_an_end_number?(collection[1], collection[2])
   end
 
+  it 'adds a number character to lead number in a character series' do
+    collection = ['1', '2']
+    assert [['num', '1'], '2'], @nw.add_numbers(collection)
+  end
 end
