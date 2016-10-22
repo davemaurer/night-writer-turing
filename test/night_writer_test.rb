@@ -77,4 +77,12 @@ describe NightWriter do
     @nw.check_for_number(collection, collection[0], 0)
     assert @nw.numbers_active?
   end
+
+  it 'changes number_time to false when done checking for numbers' do
+    collection = ['1', '2', ' ', 'a', 'b', '3']
+    @nw.number_time = true
+    assert @nw.numbers_active?
+    @nw.add_numbers(collection)
+    refute @nw.numbers_active?
+  end
 end
