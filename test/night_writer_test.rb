@@ -54,4 +54,14 @@ describe NightWriter do
     collection = ['s', 't', 'r', 'i', 'n', 'g', '1']
     assert @nw.is_a_number?(collection.last)
   end
+
+  it 'can tell when a character is not a number' do
+    collection = ['s', 't', 'r', 'i', 'n', 'g', '1']
+    refute @nw.is_a_number?(collection.first)
+  end
+
+  it 'knows when a character is the last number' do
+    collection = ['1', '2', 's', 't', 'r', 'i', 'n', 'g']
+    refute @nw.is_an_end_number?(collection.first, collection[1])
+  end
 end
