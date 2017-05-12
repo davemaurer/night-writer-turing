@@ -1,4 +1,5 @@
 require_relative 'translation_keys'
+require 'pry'
 
 class NightWriter
   include Keys
@@ -38,7 +39,7 @@ class NightWriter
   end
 
   def open_and_format_file(file_given)
-    File.open(file_given).map(&:chomp).join(' ')
+    File.open(file_given) { |f| f.map(&:chomp).join(' ') }
   end
 
   def write_braille(file, target)
